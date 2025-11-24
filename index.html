@@ -1,0 +1,322 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký gói cước di động</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .designer {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.2);
+            outline: none;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .package-info {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            border-left: 4px solid #2575fc;
+        }
+        
+        .package-info h3 {
+            margin-bottom: 10px;
+            color: #2575fc;
+        }
+        
+        .package {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            background-color: white;
+            border: 1px solid #e1e5e9;
+        }
+        
+        .package-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .package-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ĐĂNG KÝ GÓI CƯỚC DI ĐỘNG</h1>
+            <div class="designer">Designer: Hoai An</div>
+        </div>
+        
+        <div class="content">
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="phone">Số điện thoại</label>
+                    <input type="text" id="phone" placeholder="Nhập số điện thoại của bạn" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="balance">Số dư tài khoản (VNĐ)</label>
+                    <input type="number" id="balance" placeholder="Nhập số dư tài khoản" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="package">Chọn gói cước</label>
+                    <select id="package" required>
+                        <option value="">-- Chọn gói cước --</option>
+                        <option value="3175">3175 - 7,000đ/ngày - 1GB/ngày</option>
+                        <option value="3570">3570 - 700,000đ/ngày - 868/ngày</option>
+                        <option value="5628">5628 - 290,000đ/ngày - 4GB/ngày + 80 phút gọi điện</option>
+                        <option value="5630">5630 - 900,000đ/ngày - 768/ngày</option>
+                        <option value="56131">56131 - 1,335,000đ/ngày - 4GB/ngày</option>
+                        <option value="8055">8055 - 50,000đ/ngày - 1GB/ngày</option>
+                        <option value="07">07 - 70,000đ/ngày - 1.2GB/ngày</option>
+                        <option value="6144">6144 - 40,000đ/ngày - 2GB/ngày + 1000 phút gọi nội mạng</option>
+                        <option value="4824">4824 - 40,000đ/ngày - 2GB/ngày + 1000 phút gọi nội mạng</option>
+                        <option value="81690">81690 - 900,000đ/ngày - 1GB/ngày + miễn phí xem MyTV OTT</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn">ĐĂNG KÝ NGAY</button>
+            </form>
+            
+            <div id="result" class="result"></div>
+            
+            <div class="package-info">
+                <h3>THÔNG TIN CÁC GÓI CƯỚC</h3>
+                <div class="package">
+                    <div class="package-title">Gói 3175 - 7,000đ/ngày</div>
+                    <div class="package-desc">1GB data/ngày</div>
+                </div>
+                <div class="package">
+                    <div class="package-title">Gói 5628 - 290,000đ/ngày</div>
+                    <div class="package-desc">4GB data/ngày + 80 phút gọi điện + 803MS nội mạng</div>
+                </div>
+                <div class="package">
+                    <div class="package-title">Gói 6144/4824 - 40,000đ/ngày</div>
+                    <div class="package-desc">2GB data/ngày + 1000 phút gọi nội mạng + miễn phí Facebook và MyTV</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const phone = document.getElementById('phone').value;
+            const balance = parseInt(document.getElementById('balance').value);
+            const package = document.getElementById('package').value;
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            
+            // Kiểm tra số điện thoại
+            const viettelPrefixes = ['032', '033', '034', '035', '036', '037', '038', '039', 
+                                    '086', '096', '097', '098'];
+            const vinaphonePrefixes = ['081', '082', '083', '084', '085', '088', '091', '094'];
+            const mobifonePrefixes = ['070', '076', '077', '078', '079', '089', '090', '093'];
+            
+            const phonePrefix = phone.substring(0, 3);
+            let network = '';
+            
+            if (viettelPrefixes.includes(phonePrefix)) {
+                network = 'Viettel';
+            } else if (vinaphonePrefixes.includes(phonePrefix)) {
+                network = 'Vinaphone';
+            } else if (mobifonePrefixes.includes(phonePrefix)) {
+                network = 'Mobifone';
+            } else {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = 'Số điện thoại không hợp lệ. Xin hãy nhập lại số điện thoại.';
+                return;
+            }
+            
+            // Xác định giá gói cước
+            let packagePrice = 0;
+            let packageName = '';
+            
+            switch(package) {
+                case '3175':
+                    packagePrice = 7000;
+                    packageName = '3175 (7,000đ/ngày - 1GB/ngày)';
+                    break;
+                case '3570':
+                    packagePrice = 700000;
+                    packageName = '3570 (700,000đ/ngày - 868/ngày)';
+                    break;
+                case '5628':
+                    packagePrice = 290000;
+                    packageName = '5628 (290,000đ/ngày - 4GB/ngày + 80 phút gọi điện)';
+                    break;
+                case '5630':
+                    packagePrice = 900000;
+                    packageName = '5630 (900,000đ/ngày - 768/ngày)';
+                    break;
+                case '56131':
+                    packagePrice = 1335000;
+                    packageName = '56131 (1,335,000đ/ngày - 4GB/ngày)';
+                    break;
+                case '8055':
+                    packagePrice = 50000;
+                    packageName = '8055 (50,000đ/ngày - 1GB/ngày)';
+                    break;
+                case '07':
+                    packagePrice = 70000;
+                    packageName = '07 (70,000đ/ngày - 1.2GB/ngày)';
+                    break;
+                case '6144':
+                case '4824':
+                    packagePrice = 40000;
+                    packageName = '6144/4824 (40,000đ/ngày - 2GB/ngày + 1000 phút gọi nội mạng)';
+                    break;
+                case '81690':
+                    packagePrice = 900000;
+                    packageName = '81690 (900,000đ/ngày - 1GB/ngày + miễn phí xem MyTV OTT)';
+                    break;
+                default:
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = 'Vui lòng chọn gói cước hợp lệ.';
+                    return;
+            }
+            
+            // Kiểm tra số dư
+            if (balance < packagePrice) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = 'Bạn không có đủ tiền, xin hãy nhập lại.';
+            } else {
+                const remainingBalance = balance - packagePrice;
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `
+                    <strong>Đăng ký thành công!</strong><br>
+                    Số điện thoại: ${phone} (Nhà mạng: ${network})<br>
+                    Gói cước: ${packageName}<br>
+                    Số tiền còn lại: ${remainingBalance.toLocaleString('vi-VN')} VNĐ
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
