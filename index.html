@@ -104,6 +104,16 @@
             box-shadow: none;
         }
         
+        .btn-secondary {
+            background: #6c757d;
+            margin-top: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+        
         .result {
             margin-top: 20px;
             padding: 15px;
@@ -161,16 +171,24 @@
         .package-title {
             font-weight: 600;
             margin-bottom: 5px;
+            color: #2575fc;
+        }
+        
+        .package-code {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
         }
         
         .package-desc {
             font-size: 14px;
-            color: #666;
+            color: #444;
+            margin-bottom: 5px;
         }
         
         .package-price {
             font-weight: bold;
-            color: #2575fc;
+            color: #e74c3c;
             margin-top: 5px;
         }
         
@@ -250,7 +268,7 @@
                         <input type="number" id="balance" placeholder="Nhập số dư tài khoản" required>
                     </div>
                     
-                    <button type="submit" class="btn">TIẾP THEO</button>
+                    <button type="submit" class="btn">KIỂM TRA VÀ CHỌN GÓI CƯỚC</button>
                 </form>
             </div>
             
@@ -263,7 +281,7 @@
                     <div id="packagesList"></div>
                 </div>
                 
-                <button id="backBtn" class="btn" style="background: #6c757d; margin-top: 15px;">QUAY LẠI</button>
+                <button id="backBtn" class="btn btn-secondary">QUAY LẠI</button>
             </div>
             
             <!-- Kết quả đăng ký -->
@@ -272,7 +290,7 @@
     </div>
 
     <script>
-        // Các gói cước theo nhà mạng
+        // Các gói cước theo nhà mạng (theo đúng hình ảnh)
         const packages = {
             'Viettel': [
                 {code: '3175', name: 'Gói 3175', price: 7000, desc: '7000đ/ngày - 1GB/ngày'},
@@ -360,7 +378,8 @@
                 const packageElement = document.createElement('div');
                 packageElement.className = 'package';
                 packageElement.innerHTML = `
-                    <div class="package-title">${pkg.name} (${pkg.code})</div>
+                    <div class="package-title">${pkg.name}</div>
+                    <div class="package-code">Mã gói: ${pkg.code}</div>
                     <div class="package-desc">${pkg.desc}</div>
                     <div class="package-price">Giá: ${pkg.price.toLocaleString('vi-VN')} VNĐ</div>
                 `;
@@ -386,7 +405,7 @@
             const registerBtn = document.createElement('button');
             registerBtn.id = 'registerBtn';
             registerBtn.className = 'btn';
-            registerBtn.textContent = 'ĐĂNG KÝ';
+            registerBtn.textContent = 'ĐĂNG KÝ GÓI CƯỚC';
             registerBtn.disabled = true;
             registerBtn.addEventListener('click', registerPackage);
             
@@ -416,12 +435,12 @@
             // Hiển thị kết quả thành công
             resultDiv.className = 'result success';
             resultDiv.innerHTML = `
-                <strong>Đăng ký thành công!</strong><br>
-                Số điện thoại: ${currentPhone}<br>
-                Nhà mạng: ${currentNetwork}<br>
-                Gói cước: ${selectedPackage.name} (${selectedPackage.code})<br>
-                Giá: ${selectedPackage.price.toLocaleString('vi-VN')} VNĐ<br>
-                Số tiền còn lại: ${remainingBalance.toLocaleString('vi-VN')} VNĐ
+                <strong>Đăng ký thành công!</strong><br><br>
+                Số điện thoại: <strong>${currentPhone}</strong><br>
+                Nhà mạng: <strong>${currentNetwork}</strong><br>
+                Gói cước: <strong>${selectedPackage.name} (${selectedPackage.code})</strong><br>
+                Giá gói: <strong>${selectedPackage.price.toLocaleString('vi-VN')} VNĐ</strong><br><br>
+                <strong>Đăng ký thành công bạn còn dư ${remainingBalance.toLocaleString('vi-VN')} VNĐ</strong>
             `;
             resultDiv.style.display = 'block';
             
@@ -434,6 +453,9 @@
             document.getElementById('step2').classList.remove('active');
             document.getElementById('step1').classList.add('active');
             document.getElementById('result').style.display = 'none';
+            // Reset form
+            document.getElementById('phoneForm').reset();
+            selectedPackage = null;
         });
     </script>
 </body>
