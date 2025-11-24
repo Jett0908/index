@@ -171,24 +171,16 @@
         .package-title {
             font-weight: 600;
             margin-bottom: 5px;
-            color: #2575fc;
-        }
-        
-        .package-code {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
         }
         
         .package-desc {
             font-size: 14px;
-            color: #444;
-            margin-bottom: 5px;
+            color: #666;
         }
         
         .package-price {
             font-weight: bold;
-            color: #e74c3c;
+            color: #2575fc;
             margin-top: 5px;
         }
         
@@ -232,6 +224,13 @@
             border: 1px solid #b3ffb3;
         }
         
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
         @media (max-width: 480px) {
             .container {
                 border-radius: 10px;
@@ -261,11 +260,13 @@
                     <div class="form-group">
                         <label for="phone">Số điện thoại</label>
                         <input type="text" id="phone" placeholder="Nhập số điện thoại của bạn" required>
+                        <div id="phoneError" class="error-message">Xin hãy nhập lại số điện thoại</div>
                     </div>
                     
                     <div class="form-group">
                         <label for="balance">Số dư tài khoản (VNĐ)</label>
                         <input type="number" id="balance" placeholder="Nhập số dư tài khoản" required>
+                        <div id="balanceError" class="error-message">Bạn không có đủ tiền, xin hãy nhập lại</div>
                     </div>
                     
                     <button type="submit" class="btn">KIỂM TRA VÀ CHỌN GÓI CƯỚC</button>
@@ -284,43 +285,36 @@
                 <button id="backBtn" class="btn btn-secondary">QUAY LẠI</button>
             </div>
             
-            <!-- Kết quả đăng ký -->
-            <div id="result" class="result"></div>
+            <!-- Bước 3: Kết quả đăng ký -->
+            <div class="step" id="step3">
+                <div id="result" class="result"></div>
+                <button id="backToStartBtn" class="btn btn-secondary">QUAY LẠI TRANG ĐẦU</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Các gói cước theo nhà mạng (theo đúng hình ảnh)
+        // Các gói cước theo nhà mạng
         const packages = {
             'Viettel': [
-                {code: '3175', name: 'Gói 3175', price: 7000, desc: '7000đ/ngày - 1GB/ngày'},
-                {code: '3570', name: 'Gói 3570', price: 700000, desc: '700000đ/ngày - 868/ngày'},
-                {code: '5628', name: 'Gói 5628', price: 290000, desc: '290000đ/ngày - 4GB/ngày + 80 phút gọi điện, 803MS nội mạng'},
-                {code: '5630', name: 'Gói 5630', price: 900000, desc: '900000đ/ngày - 768/ngày'},
-                {code: '56131', name: 'Gói 56131', price: 1335000, desc: '1335000đ/ngày - 4GB/ngày'}
+                {code: '577K', name: 'Gói 577K', price: 7000, desc: '7000đ/ngày - 1GB/ngày'},
+                {code: '5G70', name: 'Gói 5G70', price: 70000, desc: '70000đ/7 ngày - 8GB/ngày'},
+                {code: '5G29', name: 'Gói 5G29', price: 29000, desc: '29000đ/3 ngày - 4GB/ngày + 80 phút gọi điện, 805MS nội mạng'},
+                {code: '5G30', name: 'Gói 5G30', price: 30000, desc: '30000đ/3 ngày - 7GB/ngày'},
+                {code: '5G135', name: 'Gói 5G135', price: 135000, desc: '135000đ/30 ngày - 4GB/ngày'}
             ],
             'Vinaphone': [
-                {code: '8055', name: 'Gói 8055', price: 50000, desc: '50000đ/ngày - 1GB/ngày'},
-                {code: '07', name: 'Gói 07', price: 70000, desc: '70000đ/ngày - 1.2GB/ngày'},
-                {code: '6144', name: 'Gói 6144', price: 40000, desc: '40000đ/ngày - 2GB/ngày - 1000 phút gọi nội mạng'},
-                {code: '4824', name: 'Gói 4824', price: 40000, desc: '40000đ/ngày - 2GB/ngày - 1000 phút gọi nội mạng - miễn phí Facebook và MyTV'},
-                {code: '81690', name: 'Gói 81690', price: 900000, desc: '900000đ/ngày - 1GB/ngày - miễn phí xem MyTV OTT'}
-            ],
-            'Mobifone': [
-                {code: 'MBF1', name: 'Gói Mobi1', price: 10000, desc: '10000đ/ngày - 500MB/ngày'},
-                {code: 'MBF2', name: 'Gói Mobi2', price: 20000, desc: '20000đ/ngày - 1GB/ngày'},
-                {code: 'MBF3', name: 'Gói Mobi3', price: 50000, desc: '50000đ/ngày - 2GB/ngày + 100 phút gọi'},
-            ],
-            'Other': [
-                {code: 'GTEL1', name: 'Gói GTEL1', price: 15000, desc: '15000đ/ngày - 700MB/ngày'},
-                {code: 'GTEL2', name: 'Gói GTEL2', price: 30000, desc: '30000đ/ngày - 1.5GB/ngày'},
+                {code: 'D5', name: 'Gói D5', price: 5000, desc: '5000đ/ngày - 1GB/ngày'},
+                {code: 'D7', name: 'Gói D7', price: 7000, desc: '7000đ/ngày - 1.2GB/ngày'},
+                {code: 'EUA0PV', name: 'Gói EUA0PV', price: 49000, desc: '49000đ/30 ngày - 2GB/ngày + 1000 phút gọi nội mạng'},
+                {code: 'VD100E', name: 'Gói VD100E', price: 100000, desc: '100000đ/30 ngày - 1GB/ngày + miễn phí data cho ứng dụng Facebook và MyTV'},
+                {code: 'BIG9D', name: 'Gói BIG9D', price: 90000, desc: '90000đ/30 ngày - 1GB/ngày + miễn phí data xem MyTV OTT'}
             ]
         };
 
         // Tiền tố số điện thoại theo nhà mạng
         const viettelPrefixes = ['032', '033', '034', '035', '036', '037', '038', '039', '086', '096', '097', '098'];
         const vinaphonePrefixes = ['081', '082', '083', '084', '085', '088', '091', '094'];
-        const mobifonePrefixes = ['070', '076', '077', '078', '079', '089', '090', '093'];
 
         // Biến toàn cục
         let currentPhone = '';
@@ -332,6 +326,10 @@
         document.getElementById('phoneForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Reset thông báo lỗi
+            document.getElementById('phoneError').style.display = 'none';
+            document.getElementById('balanceError').style.display = 'none';
+            
             currentPhone = document.getElementById('phone').value;
             currentBalance = parseInt(document.getElementById('balance').value);
             
@@ -342,10 +340,10 @@
                 currentNetwork = 'Viettel';
             } else if (vinaphonePrefixes.includes(phonePrefix)) {
                 currentNetwork = 'Vinaphone';
-            } else if (mobifonePrefixes.includes(phonePrefix)) {
-                currentNetwork = 'Mobifone';
             } else {
-                currentNetwork = 'Other';
+                // Hiển thị lỗi nếu số điện thoại không thuộc nhà mạng nào
+                document.getElementById('phoneError').style.display = 'block';
+                return;
             }
             
             // Hiển thị thông tin nhà mạng
@@ -378,8 +376,7 @@
                 const packageElement = document.createElement('div');
                 packageElement.className = 'package';
                 packageElement.innerHTML = `
-                    <div class="package-title">${pkg.name}</div>
-                    <div class="package-code">Mã gói: ${pkg.code}</div>
+                    <div class="package-title">${pkg.name} (${pkg.code})</div>
                     <div class="package-desc">${pkg.desc}</div>
                     <div class="package-price">Giá: ${pkg.price.toLocaleString('vi-VN')} VNĐ</div>
                 `;
@@ -405,7 +402,7 @@
             const registerBtn = document.createElement('button');
             registerBtn.id = 'registerBtn';
             registerBtn.className = 'btn';
-            registerBtn.textContent = 'ĐĂNG KÝ GÓI CƯỚC';
+            registerBtn.textContent = 'ĐĂNG KÝ';
             registerBtn.disabled = true;
             registerBtn.addEventListener('click', registerPackage);
             
@@ -419,13 +416,9 @@
                 return;
             }
             
-            const resultDiv = document.getElementById('result');
-            
             // Kiểm tra số dư
             if (currentBalance < selectedPackage.price) {
-                resultDiv.className = 'result error';
-                resultDiv.innerHTML = 'Bạn không có đủ tiền, xin hãy nhập lại số dư tài khoản.';
-                resultDiv.style.display = 'block';
+                document.getElementById('balanceError').style.display = 'block';
                 return;
             }
             
@@ -433,26 +426,36 @@
             const remainingBalance = currentBalance - selectedPackage.price;
             
             // Hiển thị kết quả thành công
+            const resultDiv = document.getElementById('result');
             resultDiv.className = 'result success';
             resultDiv.innerHTML = `
                 <strong>Đăng ký thành công!</strong><br><br>
-                Số điện thoại: <strong>${currentPhone}</strong><br>
-                Nhà mạng: <strong>${currentNetwork}</strong><br>
-                Gói cước: <strong>${selectedPackage.name} (${selectedPackage.code})</strong><br>
-                Giá gói: <strong>${selectedPackage.price.toLocaleString('vi-VN')} VNĐ</strong><br><br>
-                <strong>Đăng ký thành công bạn còn dư ${remainingBalance.toLocaleString('vi-VN')} VNĐ</strong>
+                Số điện thoại: ${currentPhone}<br>
+                Nhà mạng: ${currentNetwork}<br>
+                Gói cước: ${selectedPackage.name} (${selectedPackage.code})<br>
+                Giá: ${selectedPackage.price.toLocaleString('vi-VN')} VNĐ<br>
+                Số tiền còn lại: ${remainingBalance.toLocaleString('vi-VN')} VNĐ
             `;
             resultDiv.style.display = 'block';
             
-            // Ẩn bước 2
+            // Chuyển sang bước 3
             document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
         }
 
-        // Xử lý nút quay lại
+        // Xử lý nút quay lại từ bước 2
         document.getElementById('backBtn').addEventListener('click', function() {
             document.getElementById('step2').classList.remove('active');
             document.getElementById('step1').classList.add('active');
             document.getElementById('result').style.display = 'none';
+        });
+
+        // Xử lý nút quay lại từ bước 3
+        document.getElementById('backToStartBtn').addEventListener('click', function() {
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('result').style.display = 'none';
+            
             // Reset form
             document.getElementById('phoneForm').reset();
             selectedPackage = null;
